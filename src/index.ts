@@ -1,7 +1,14 @@
 import express, { Request, Response} from 'express';
-import './db/mongoose'
+import './db/mongoose';
+import userRouter from './routes/user';
+import bodyParser from 'body-parser';
+
 const app = express();
-const port = 3000;
+const port = 8000;
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(userRouter)
 
 app.get('/', (req: Request, res: Response) => {
     res.send('express app is running')

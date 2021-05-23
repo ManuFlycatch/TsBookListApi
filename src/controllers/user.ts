@@ -2,6 +2,7 @@ import { Request,Response,NextFunction} from 'express';
 import mongoose from 'mongoose';
 import User from '../models/user'
 
+
 const createUser = async (req: Request,res: Response, next: NextFunction) => {
 
     
@@ -39,5 +40,8 @@ const getUser = async (req: Request,res: Response,next: NextFunction) => {
             })
         })
 }
+
+
+
 
 export default { createUser, getUser }

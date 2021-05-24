@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import User, { IUser } from '../models/user'
 
 
+
 const createUser = async (req: Request,res: Response, next: NextFunction) => {
 
     
@@ -44,7 +45,8 @@ const getUser = async (req: Request,res: Response,next: NextFunction) => {
 const loginUser = async(req:Request,res:Response,next:NextFunction) => {
     try{
         const user = await User.findByCredentials(req.body.email,req.body.password)
-        res.send(user)
+        const token = await user.generateAuthToken()
+        res.send({ user, token })
     }
     catch(err)
     {
@@ -53,7 +55,11 @@ const loginUser = async(req:Request,res:Response,next:NextFunction) => {
    
 }
 
+const readUser = async(req:Request, res:Response,next: NextFunction) => {
+    res.send('user page...')
+}
 
 
 
-export default { createUser, getUser, loginUser }
+
+export default { createUser, getUser, loginUser, readUser }

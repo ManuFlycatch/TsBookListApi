@@ -41,10 +41,14 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User.findByCredentials(req.body.email, req.body.password);
-        res.send(user);
+        const token = yield user.generateAuthToken();
+        res.send({ user, token });
     }
     catch (err) {
         res.status(404).send(err);
     }
 });
-export default { createUser, getUser, loginUser };
+const readUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send('user page...');
+});
+export default { createUser, getUser, loginUser, readUser };

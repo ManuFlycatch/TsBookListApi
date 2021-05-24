@@ -9,12 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
 const UserSchema = new Schema({
     name: { type: String, required: true },
     age: { type: Number, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    tokens: [{
+            token: {
+                type: String, required: true
+            }
+        }]
 });
+UserSchema.methods.generateAuthToken = function () {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = this;
+        const token = jwt.sign({ _id: user._id.toString() }, 'thisismysecret');
+        user.tokens = user.tokens.concat({ token });
+        yield user.save();
+        return token;
+    });
+};
 UserSchema.statics.findByCredentials = function (email, password) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield User.findOne({ email }).exec();

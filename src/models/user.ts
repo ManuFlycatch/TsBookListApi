@@ -1,11 +1,14 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
 
 export interface IUser extends Document<any> {
   name: string;
   age: number;
   email: string;
   password: string;
+  tokens: Array<object>;
+  generateAuthToken() :string;
 }
 
 export interface IUserModel extends Model<IUser> {
@@ -18,7 +21,25 @@ const UserSchema = new Schema<IUser, IUserModel>({
   age: { type: Number, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  tokens: [{
+    token:{
+      type: String, required: true
+    }
+  }]
+ 
 });
+
+
+UserSchema.methods.generateAuthToken = async function (){
+  const user = this
+  const token = jwt.sign({_id: user._id.toString()},'thisismysecret')
+
+  user.tokens = user.tokens.concat({ token })
+  await user.save()
+
+  return token
+
+}
 
 UserSchema.statics.findByCredentials = async function (
   email: string,

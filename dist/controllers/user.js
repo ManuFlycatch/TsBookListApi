@@ -38,4 +38,13 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         });
     });
 });
-export default { createUser, getUser };
+const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield User.findByCredentials(req.body.email, req.body.password);
+        res.send(user);
+    }
+    catch (err) {
+        res.status(404).send(err);
+    }
+});
+export default { createUser, getUser, loginUser };

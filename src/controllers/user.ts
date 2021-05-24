@@ -1,6 +1,6 @@
 import { Request,Response,NextFunction} from 'express';
 import mongoose from 'mongoose';
-import User from '../models/user'
+import User, { IUser } from '../models/user'
 
 
 const createUser = async (req: Request,res: Response, next: NextFunction) => {
@@ -41,7 +41,19 @@ const getUser = async (req: Request,res: Response,next: NextFunction) => {
         })
 }
 
+const loginUser = async(req:Request,res:Response,next:NextFunction) => {
+    try{
+        const user = await User.findByCredentials(req.body.email,req.body.password)
+        res.send(user)
+    }
+    catch(err)
+    {
+        res.status(404).send(err)
+    }
+   
+}
 
 
 
-export default { createUser, getUser }
+
+export default { createUser, getUser, loginUser }

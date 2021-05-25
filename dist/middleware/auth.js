@@ -7,13 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import jwt from 'jsonwebtoken';
-export const auth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.header('Authorzation');
-    if (!token) {
-        return res.status(401).json('Access Denied');
-    }
-    const decoded = jwt.verify(token, 'thisismysecret');
+export const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('auth middleware');
     next();
 });
-export default auth;

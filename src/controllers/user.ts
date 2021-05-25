@@ -1,6 +1,6 @@
 import { Request,Response,NextFunction} from 'express';
 import mongoose from 'mongoose';
-import User, { IUser } from '../models/user'
+import User from '../models/user'
 
 
 
@@ -29,20 +29,7 @@ const getUser = async (req: Request,res: Response,next: NextFunction) => {
     {
         res.status(500).send()
     }
-
-    // User.find()
-    //     .exec()
-    //     .then((result) => {
-    //         return res.status(200).json({
-    //              result
-    //         })
-    //     })
-    //     .catch((error) => {
-    //         return res.status(500).json({
-    //             message: error.message,
-    //             error
-    //         })
-    //     })
+    
 }
 
 const loginUser = async(req:Request,res:Response,next:NextFunction) => {

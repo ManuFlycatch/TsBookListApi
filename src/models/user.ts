@@ -41,10 +41,7 @@ UserSchema.methods.generateAuthToken = async function (){
 
 }
 
-UserSchema.statics.findByCredentials = async function (
-  email: string,
-  password: string
-): Promise<IUser | null> {
+UserSchema.statics.findByCredentials = async function (email: string,password: string): Promise<IUser | null> {
   const user = await User.findOne({ email }).exec();
   if (!user) {
     throw new Error("unable to login...");

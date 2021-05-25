@@ -9,18 +9,16 @@ const createUser = async (req: Request,res: Response, next: NextFunction) => {
     
     const user = new User(req.body)
 
-    return user.save()
-        .then((result) => {
-            return res.status(201).json({
-                user: result
-            })
-        })
-        .catch((error) => {
-            return res.status(500).json({
-                message: error.message,
-                error
-            })
-        })
+    try {
+        await user.save()
+        const token = await user.generateAuthToken()
+        res.status(201).send({ user, token })
+    }catch (err)
+    {
+        res.status(400).send(err)
+    }
+
+   
 
 
 

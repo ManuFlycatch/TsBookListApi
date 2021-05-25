@@ -10,18 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import User from '../models/user';
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = new User(req.body);
-    return user.save()
-        .then((result) => {
-        return res.status(201).json({
-            user: result
-        });
-    })
-        .catch((error) => {
-        return res.status(500).json({
-            message: error.message,
-            error
-        });
-    });
+    try {
+        yield user.save();
+        const token = yield user.generateAuthToken();
+        res.status(201).send({ user, token });
+    }
+    catch (err) {
+        res.status(400).send(err);
+    }
 });
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     User.find()

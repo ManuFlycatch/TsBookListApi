@@ -18,26 +18,31 @@ const createUser = async (req: Request,res: Response, next: NextFunction) => {
         res.status(400).send(err)
     }
 
-   
-
-
-
 }
 const getUser = async (req: Request,res: Response,next: NextFunction) => {
 
-    User.find()
-        .exec()
-        .then((result) => {
-            return res.status(200).json({
-                 result
-            })
-        })
-        .catch((error) => {
-            return res.status(500).json({
-                message: error.message,
-                error
-            })
-        })
+    try {
+        const user = await User.find({})
+        res.status(201).send(user)
+    }
+    catch(err)
+    {
+        res.status(500).send()
+    }
+
+    // User.find()
+    //     .exec()
+    //     .then((result) => {
+    //         return res.status(200).json({
+    //              result
+    //         })
+    //     })
+    //     .catch((error) => {
+    //         return res.status(500).json({
+    //             message: error.message,
+    //             error
+    //         })
+    //     })
 }
 
 const loginUser = async(req:Request,res:Response,next:NextFunction) => {

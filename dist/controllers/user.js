@@ -20,19 +20,26 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    User.find()
-        .exec()
-        .then((result) => {
-        return res.status(200).json({
-            result
-        });
-    })
-        .catch((error) => {
-        return res.status(500).json({
-            message: error.message,
-            error
-        });
-    });
+    try {
+        const user = yield User.find({});
+        res.status(201).send(user);
+    }
+    catch (err) {
+        res.status(500).send();
+    }
+    // User.find()
+    //     .exec()
+    //     .then((result) => {
+    //         return res.status(200).json({
+    //              result
+    //         })
+    //     })
+    //     .catch((error) => {
+    //         return res.status(500).json({
+    //             message: error.message,
+    //             error
+    //         })
+    //     })
 });
 const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

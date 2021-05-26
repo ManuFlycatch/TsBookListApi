@@ -39,6 +39,6 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 const readUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('user page...');
+    res.send(req.user);
 });
 export default { createUser, getUser, loginUser, readUser };

@@ -46,7 +46,7 @@ const loginUser = async(req:Request,res:Response,next:NextFunction) => {
 }
 
 const readUser = async(req:Request, res:Response,next: NextFunction) => {
-    res.send('user page...')
+    res.send(req.user)
 }
 
 
